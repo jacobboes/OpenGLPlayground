@@ -27,11 +27,11 @@ public class ARRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         squares = new ArrayList<>();
-        squares.add(new Square(0, 0.1f, Color.BLUE));
+        squares.add(new Square(0, 0.05f, Color.BLUE));
         squares.add(new Square(0, 0.0f, Color.RED));
-        squares.add(new Square(0, -0.1f, Color.GREEN));
-        squares.add(new Square(0.1f, 0, Color.BLUE));
-        squares.add(new Square(-0.1f, 0, Color.GREEN));
+        squares.add(new Square(0, -0.05f, Color.GREEN));
+        squares.add(new Square(0.05f, 0, Color.BLUE));
+        squares.add(new Square(-0.05f, 0, Color.GREEN));
     }
 
     @Override
@@ -61,7 +61,6 @@ public class ARRenderer implements GLSurfaceView.Renderer {
 
     private float[] translateMatrix(float x, float y) {
 
-        float[] modelMatrix = new float[16];
         Matrix.setIdentityM(modelMatrix, 0);
         Matrix.translateM(modelMatrix, 0, x, y, 0);
         // Create a rotation transformation for the triangle

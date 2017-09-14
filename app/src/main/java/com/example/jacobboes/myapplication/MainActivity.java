@@ -44,8 +44,6 @@ public class MainActivity extends Activity {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)
                     this, Manifest.permission.CAMERA)) {
-
-
             } else {
                 ActivityCompat.requestPermissions((Activity) this,
                         new String[]{Manifest.permission.CAMERA},
