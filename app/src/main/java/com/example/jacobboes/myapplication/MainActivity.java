@@ -11,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 import com.example.jacobboes.myapplication.camera.CameraPreview;
+import com.example.jacobboes.myapplication.camera.CameraPreview2;
+import com.example.jacobboes.myapplication.camera2.Camera2BasicFragment;
 
 public class MainActivity extends Activity {
 
@@ -20,22 +22,28 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        checkCameraPermission();
-
-        if (checkCameraHardware(this)) {
-            FrameLayout layout = new FrameLayout(this);
-            Camera camera = getCameraInstance();
-            if (camera != null) {
-                layout.addView(new CameraPreview(this, camera));
-                glView = new ARView(this);
-                layout.addView(glView);
-                setContentView(layout);
-            } else {
-                glView = new ARView(this);
-                setContentView(glView);
-            }
+        setContentView(R.layout.activity_camera);
+        if (null == savedInstanceState) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, Camera2BasicFragment.newInstance())
+                    .add(R.id.container, new ARFragment())
+                    .commit();
         }
+//        checkCameraPermission();
+//
+//        if (checkCameraHardware(this)) {
+//            FrameLayout layout = new FrameLayout(this);
+//            Camera camera = getCameraInstance();
+//            if (camera != null) {
+//                layout.addView(new CameraPreview2(this, camera));
+//                glView = new ARView(this);
+//                layout.addView(glView);
+//                setContentView(layout);
+//            } else {
+//                glView = new ARView(this);
+//                setContentView(glView);
+//            }
+//        }
     }
 
     private void checkCameraPermission() {

@@ -64,13 +64,13 @@ public class ARRenderer implements GLSurfaceView.Renderer {
         Matrix.setIdentityM(modelMatrix, 0);
         Matrix.translateM(modelMatrix, 0, x, y, 0);
         // Create a rotation transformation for the triangle
-//        long time = SystemClock.uptimeMillis() % 4000L;
-//        float angle = 0.090f * ((int) time);
-//        Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
-//
-//        // Combine Rotation and Translation matrices
-//        tempMatrix = modelMatrix.clone();
-//        Matrix.multiplyMM(modelMatrix, 0, tempMatrix, 0, rotationMatrix, 0);
+        long time = SystemClock.uptimeMillis() % 4000L;
+        float angle = 0.090f * ((int) time);
+        Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
+
+        // Combine Rotation and Translation matrices
+        tempMatrix = modelMatrix.clone();
+        Matrix.multiplyMM(modelMatrix, 0, tempMatrix, 0, rotationMatrix, 0);
         // Combine the model matrix with the projection and camera view
         tempMatrix = mvpMatrix.clone();
         float[] mvp = new float[16];
