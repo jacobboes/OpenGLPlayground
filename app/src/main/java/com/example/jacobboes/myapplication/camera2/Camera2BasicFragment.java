@@ -573,11 +573,9 @@ public class Camera2BasicFragment extends Fragment
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mTextureView.setAspectRatio(
-                            maxPreviewWidth, maxPreviewHeight);
+                    mTextureView.setAspectRatio(rotatedPreviewWidth, rotatedPreviewHeight);
                 } else {
-                    mTextureView.setAspectRatio(
-                            maxPreviewHeight, maxPreviewWidth);
+                    mTextureView.setAspectRatio(rotatedPreviewHeight, rotatedPreviewWidth);
                 }
 
                 // Check if the flash is supported.

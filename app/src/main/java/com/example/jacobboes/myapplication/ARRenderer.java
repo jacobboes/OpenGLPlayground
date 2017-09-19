@@ -3,8 +3,8 @@ package com.example.jacobboes.myapplication;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import android.os.SystemClock;
 import com.example.jacobboes.myapplication.shapes.*;
+import com.example.jacobboes.myapplication.shapes.dto.DTOSquare;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ARRenderer implements GLSurfaceView.Renderer {
+    private final Object lock = new Object();
     private List<Square> squares;
 
     // mvpMatrix is an abbreviation for "Model View Projection Matrix"
@@ -22,16 +23,21 @@ public class ARRenderer implements GLSurfaceView.Renderer {
     private float[] modelMatrix = new float[16];
     private float[] rotationMatrix = new float[16];
     private float[] tempMatrix = new float[16];
+    private List<DTOSquare> shapesToRender;
+
+    public ARRenderer() {
+        shapesToRender = new ArrayList<>();
+        squares = new ArrayList<>();
+    }
 
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        squares = new ArrayList<>();
-        squares.add(new Square(0, 0.05f, Color.BLUE));
-        squares.add(new Square(0, 0.0f, Color.RED));
-        squares.add(new Square(0, -0.05f, Color.GREEN));
-        squares.add(new Square(0.05f, 0, Color.BLUE));
-        squares.add(new Square(-0.05f, 0, Color.GREEN));
+//        squares.add(new Square(0, 0.05f, Color.BLUE));
+//        squares.add(new Square(0, 0.0f, Color.RED));
+//        squares.add(new Square(0, -0.05f, Color.GREEN));
+//        squares.add(new Square(0.05f, 0, Color.BLUE));
+//        squares.add(new Square(-0.05f, 0, Color.GREEN));
     }
 
     @Override
@@ -53,6 +59,11 @@ public class ARRenderer implements GLSurfaceView.Renderer {
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
+        squares.clear();
+        for (DTOSquare dto : shapesToRender) {
+            squares.add(new Square(dto));
+        }
+
         for (Square square : squares) {
             float[] mvp = translateMatrix(square.getX(), square.getY());
             square.draw(mvp);
@@ -64,13 +75,13 @@ public class ARRenderer implements GLSurfaceView.Renderer {
         Matrix.setIdentityM(modelMatrix, 0);
         Matrix.translateM(modelMatrix, 0, x, y, 0);
         // Create a rotation transformation for the triangle
-        long time = SystemClock.uptimeMillis() % 4000L;
-        float angle = 0.090f * ((int) time);
-        Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
-
-        // Combine Rotation and Translation matrices
-        tempMatrix = modelMatrix.clone();
-        Matrix.multiplyMM(modelMatrix, 0, tempMatrix, 0, rotationMatrix, 0);
+//        long time = SystemClock.uptimeMillis() % 4000L;
+//        float angle = 0.090f * ((int) time);
+//        Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
+//
+//        // Combine Rotation and Translation matrices
+//        tempMatrix = modelMatrix.clone();
+//        Matrix.multiplyMM(modelMatrix, 0, tempMatrix, 0, rotationMatrix, 0);
         // Combine the model matrix with the projection and camera view
         tempMatrix = mvpMatrix.clone();
         float[] mvp = new float[16];
@@ -89,5 +100,9 @@ public class ARRenderer implements GLSurfaceView.Renderer {
         GLES20.glCompileShader(shader);
 
         return shader;
+    }
+
+    public void addSquare(DTOSquare square) {
+        shapesToRender.add(square);
     }
 }

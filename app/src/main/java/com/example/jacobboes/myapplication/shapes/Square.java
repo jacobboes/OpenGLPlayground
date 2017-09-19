@@ -1,6 +1,8 @@
 package com.example.jacobboes.myapplication.shapes;
 
 
+import com.example.jacobboes.myapplication.shapes.dto.DTOSquare;
+
 public class Square extends Shape {
     private static float width = 0.1f;
     private static float height = 0.1f;
@@ -15,6 +17,10 @@ public class Square extends Shape {
         this.y = y;
         this.color = color;
         initialize();
+    }
+
+    public Square(DTOSquare square) {
+        this(square.getX(),square.getY(),square.getColor());
     }
 
     public float getX() {
