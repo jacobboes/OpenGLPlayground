@@ -47,6 +47,7 @@ public class ARRenderer implements GLSurfaceView.Renderer {
 
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
+//        Matrix.orthoM(projectionMatrix, 0, -ratio, ratio, -1, 1, 1, 100);
         Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
     }
 
